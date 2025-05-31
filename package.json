@@ -1,6 +1,7 @@
 {
   "name": "finansys",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -24,7 +25,7 @@
     "angular-imask": "^7.6.1",
     "angular-in-memory-web-api": "^0.18.0",
     "bootstrap": "^5.3.3",
-    "chart.js": "^4.4.3",
+    "chart.js": "^4.4.9",
     "currency-formatter": "^1.5.9",
     "express": "^4.18.2",
     "jquery": "^3.7.1",
