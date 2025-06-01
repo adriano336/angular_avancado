@@ -54,12 +54,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/toastr/build/toastr.min.css",
+              "src/styles.scss",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/nova/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

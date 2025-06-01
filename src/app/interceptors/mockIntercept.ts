@@ -94,5 +94,12 @@ export const mockInterceptor: HttpInterceptorFn = (
     return of(new HttpResponse({ status: 204 }));
   }
 
+  //GET_ID
+  if (url.match(/api\/categories\/\d+$/) && req.method === 'GET') {
+    const id = parseInt(url.split('/').pop()!, 10);
+    const category : Category  = mockCategories.find(m => m.id == id) ?? new Category();
+    return of(new HttpResponse({ status: 200, body: category }));
+  }
+
   return next(req); // continua se não for mockado
 };
