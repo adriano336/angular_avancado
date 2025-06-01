@@ -7,9 +7,10 @@ export const mockInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
-  if (req.url.endsWith('/api/categories') && req.method === 'GET') {
-     const categories : Array<Category> = [
-          {
+
+  const { url, method, body } = req;
+  let mockCategories: Category[] = [
+     {
             id: 1,
             name: 'Lazer',
             description: 'Atividades de entretenimento e diversão',
@@ -60,8 +61,37 @@ export const mockInterceptor: HttpInterceptorFn = (
             name: 'Investimentos',
             description: 'Aportes em ações, fundos, poupança e similares',
           },
-        ];
+  ]
+
+  if (req.url.endsWith('api/categories') && req.method === 'GET') {
+     const categories : Array<Category> = mockCategories;
     return of(new HttpResponse({ status: 200, body: categories }));
+  }
+
+  // POST
+  if (url.endsWith('api/categories') && method === 'POST') {
+    const newCategory = { ...body, id: Date.now() };
+    mockCategories.push(newCategory);
+    return of(new HttpResponse({ status: 201, body: newCategory }));
+  }
+
+  // PUT
+  if (url.match(/api\/categories\/\d+$/) && method === 'PUT') {
+    const id = parseInt(url.split('/').pop()!, 10);
+    const index = mockCategories.findIndex(cat => cat.id === id);
+    if (index > -1) {
+      mockCategories[index] = { ...mockCategories[index], ...body };
+      return of(new HttpResponse({ status: 200, body: mockCategories[index] }));
+    } else {
+      return of(new HttpResponse({ status: 404 }));
+    }
+  }
+
+  // DELETE
+  if (url.match(/api\/categories\/\d+$/) && method === 'DELETE') {
+    const id = parseInt(url.split('/').pop()!, 10);
+    mockCategories = mockCategories.filter(cat => cat.id !== id);
+    return of(new HttpResponse({ status: 204 }));
   }
 
   return next(req); // continua se não for mockado
