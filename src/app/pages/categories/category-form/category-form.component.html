@@ -1,5 +1,5 @@
 <nav class="mb-5">
-  <ol class="breadcrumb">
+  <ol class="breadcrumb bg-dark">
     <li class="breadcrumb-item">
       <a routerLink="/">Home</a>
     </li>
@@ -49,6 +49,15 @@
 
       </div>
     </div>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="!!serverErrorMessages">
+    <strong>Erro no servidor</strong>
+    <ul>
+      <li *ngFor="let err of serverErrorMessages">
+        {{err}}
+      </li>
+    </ul>
   </div>
 
   <button [disabled]="submittingForm || categoryForm.invalid" type="submit"
