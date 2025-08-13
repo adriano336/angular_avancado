@@ -15,6 +15,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { mockInterceptor } from './interceptors/mockIntercept.js';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

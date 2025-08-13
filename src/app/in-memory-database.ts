@@ -5,7 +5,7 @@ import { Category } from './pages/categories/shared/category.model.js';
 
 export class InMemoryDatabase {
   createDb(reqInfo?: RequestInfo): {} | Observable<{}> | Promise<{}> {
-    const categories : Array<Category> = [
+    const categories : Category[] = [
       {
         id: 1,
         name: 'Lazer',
