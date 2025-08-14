@@ -12,7 +12,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
-
+import { primeng } from './pt.json';
 import { mockInterceptor } from './interceptors/mockIntercept.js';
 
 
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Aura,
       },
+      translation : primeng
     }),
     provideAnimations(),
     provideToastr(),

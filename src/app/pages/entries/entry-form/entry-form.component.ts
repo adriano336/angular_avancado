@@ -19,7 +19,8 @@ import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 import { DatePickerModule } from 'primeng/datepicker';
 import { IMaskModule } from "angular-imask";
-import { normalize } from 'path';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-entry-form',
@@ -28,7 +29,10 @@ import { normalize } from 'path';
     CommonModule,
     ReactiveFormsModule,
     DatePickerModule,
-    IMaskModule],
+    IMaskModule,
+    BrowserAnimationsModule,
+    BrowserModule
+  ],
   templateUrl: './entry-form.component.html',
   styleUrl: './entry-form.component.scss',
 })
@@ -47,6 +51,30 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     normalizeZeros: true,
     radix: ','
   }
+  ptBr = {
+  firstDayOfWeek: 0,
+  dayNames: [
+    'domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'
+  ],
+  dayNamesShort: [
+    'dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'
+  ],
+  dayNamesMin: [
+    'D', 'S', 'T', 'Q', 'Q', 'S', 'S'
+  ],
+  monthNames: [
+    'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+  ],
+  monthNamesShort: [
+    'jan', 'fev', 'mar', 'abr', 'mai', 'jun',
+    'jul', 'ago', 'set', 'out', 'nov', 'dez'
+  ],
+  today: 'Hoje',
+  clear: 'Limpar',
+  dateFormat: 'dd/mm/yy',
+  weekHeader: 'Sem'
+};
 
   constructor(
     private fb: FormBuilder,
