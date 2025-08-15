@@ -1,0 +1,71 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">Lançamentos</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">Lançamentos</h1>
+  </div>
+  <div class="col-md">
+    <a routerLink="new" class="btn btn-success float-end">+ Novo lançamento</a>
+  </div>
+</div>
+<table class="table table-over">
+  <thead>
+    <tr class="bg-primary text-light">
+      <th>Lançamento</th>
+      <th>Categoria</th>
+      <th class="text-right">Valor R$</th>
+      <th class="text-center">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (entry of entries; track entry.id) {
+    <tr>
+      <td>
+        <strong>{{ entry.name }}</strong
+        ><br />
+        <small class="text-success">{{ entry.date }}</small
+        ><br />
+        @if (!!entry.description) {
+        <small>{{ entry.description }}</small>
+        }
+      </td>
+      <td>
+        {{ entry.category?.name }}
+      </td>
+      <td class="text-right">
+        <strong
+          [class.text-success]="entry.type === 'Receita'"
+          [class.text-danger]="entry.type === 'Despesa'"
+        >
+          {{ entry.amount | currency : "BRL" : "symbol" : "1.2-2" }}
+        </strong>
+        <br>
+        <span class="badge rounded-pill text-bg-secondary">
+          {{ entry.paidText }}
+        </span>
+
+
+      </td>
+      <td class="text-center">
+        <a
+          [routerLink]="[entry.id, 'edit']"
+          class="btn btn-outline-info btn-sm me-2"
+          >Editar</a
+        >
+        <a
+          (click)="excluirCategoria(entry)"
+          class="btn btn-outline-danger btn-sm"
+          >Excluir</a
+        >
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>

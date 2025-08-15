@@ -1,0 +1,150 @@
+<nav class="mb-5">
+  <ol class="breadcrumb bg-dark">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a routerLink="/categories">Lançamentos</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a
+        routerLink="/"
+        [routerLinkActive]="['active']"
+        routerLinkActive="router-link-active"
+        >Formulário de Lançamentos</a
+      >
+    </li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md-9">
+    <h1 class="h2 border-left pl-2">{{ pageTitle }}</h1>
+  </div>
+  <div class="col-md-3">
+    <a routerLink="/entries" class="btn btn-light float-end"> << Voltar</a>
+  </div>
+</div>
+
+<form [formGroup]="entryForm" (submit)="submitForm()">
+  <div class="card">
+    <div class="card-header">
+      {{ pageTitle }}
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <!-- type -->
+        <div class="group col-md-2">
+          <label class="form-label" for="type">Tipo</label>
+          <select
+            name="type"
+            id="type"
+            formControlName="type"
+            class="form-control"
+          >
+            <option value="Despesa">Despesa</option>
+            <option value="Receita">Receita</option>
+          </select>
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('type')?.invalid && entryForm.get('type')?.touched
+            "
+          >
+            @if (entryForm.get('type')?.getError('required')) {
+            <div>Dado obrigatório</div>
+            }
+          </div>
+        </div>
+        <!-- name -->
+        <div class="group col-md-5">
+          <label for="name" class="form-label">Lançamento</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+          />
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('name')?.invalid && entryForm.get('name')?.touched
+            "
+          >
+            @if (entryForm.get('name')?.getError('required')) {
+            <div>Dado obrigatório</div>
+            } @if (entryForm.get('name')?.getError('minLenght')) {
+            <div>Deve ter ao menos 2 caracters</div>
+            }
+          </div>
+        </div>
+        <!-- amount -->
+        <div class="group col-md-5">
+          <label class="form-label" for="amount">Valor</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">R$</div>
+            </div>
+            <input
+              [imask]="imaskConfig"
+              type="text"
+              class="form-control text-right"
+              id="amount"
+              formControlName="amount"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                entryForm.get('amount')?.invalid &&
+                entryForm.get('amount')?.touched
+              "
+            >
+              @if (entryForm.get('amount')?.getError('required')) {
+              <div>Dado obrigatório</div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- date -->
+        <div class="col-md-2">
+          <label for="date" class="form-label">Data</label>
+          <p-datepicker
+            id="date"
+            formControlName="date"
+            inputStyleClass="form-control"
+            dataType="string"
+            dateFormat="dd/mm/yy"
+            [showButtonBar]="true"
+          >
+          </p-datepicker>
+        </div>
+      </div>
+      <div class="row">
+        <!-- description -->
+        <div class="col-md-8">
+          <label for="description" class="form-label">Descricao</label>
+          <input type="text" class="form-control" id="description" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="!!serverErrorMessages">
+    <strong>Erro no servidor</strong>
+    <ul>
+      <li *ngFor="let err of serverErrorMessages">
+        {{ err }}
+      </li>
+    </ul>
+  </div>
+
+  <button
+    [disabled]="submittingForm || entryForm.invalid"
+    type="submit"
+    class="btn btn-primary btn-lg float-end mt-3"
+  >
+    Salvar
+  </button>
+</form>

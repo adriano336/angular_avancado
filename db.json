@@ -1,0 +1,157 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Lazer",
+      "description": "Atividades de entretenimento e diversão"
+    },
+    {
+      "id": 2,
+      "name": "Alimentação",
+      "description": "Despesas com comida e bebida"
+    },
+    {
+      "id": 3,
+      "name": "Transporte",
+      "description": "Gastos com locomoção, combustível, passagens, etc."
+    },
+    {
+      "id": 4,
+      "name": "Educação",
+      "description": "Investimentos em cursos, livros e mensalidades"
+    },
+    {
+      "id": 5,
+      "name": "Moradia",
+      "description": "Despesas com aluguel, financiamento ou manutenção da casa"
+    },
+    {
+      "id": 6,
+      "name": "Saúde",
+      "description": "Gastos com medicamentos, consultas, exames, etc."
+    },
+    {
+      "id": 7,
+      "name": "Vestuário",
+      "description": "Compras de roupas, calçados e acessórios"
+    },
+    {
+      "id": 8,
+      "name": "Tecnologia",
+      "description": "Aparelhos eletrônicos, serviços digitais, etc."
+    },
+    {
+      "id": 9,
+      "name": "Impostos",
+      "description": "Pagamentos de tributos, taxas e contribuições"
+    },
+    {
+      "id": 10,
+      "name": "Investimentos",
+      "description": "Aportes em ações, fundos, poupança e similares"
+    }
+  ],
+
+  "entries": [
+    {
+      "id": 1,
+      "name": "Supermercado",
+      "description": "Compra de alimentos e produtos de limpeza",
+      "type": "Despesa",
+      "amount": "350.50",
+      "date": "2025-08-10",
+      "paid": true,
+      "categoryId": 2
+    },
+    {
+      "id": 2,
+      "name": "Salário",
+      "description": "Recebimento de salário mensal",
+      "type": "Receita",
+      "amount": "5500.00",
+      "date": "2025-08-05",
+      "paid": true,
+      "categoryId": 10
+    },
+    {
+      "id": 3,
+      "name": "Gasolina",
+      "description": "Abastecimento do carro",
+      "type": "Despesa",
+      "amount": "220.00",
+      "date": "2025-08-09",
+      "paid": false,
+      "categoryId": 3
+    },
+    {
+      "id": 4,
+      "name": "Venda de Notebook",
+      "description": "Venda de equipamento usado",
+      "type": "Receita",
+      "amount": "2500.00",
+      "date": "2025-08-01",
+      "paid": true,
+      "categoryId": 8
+    },
+    {
+      "id": 5,
+      "name": "Plano de Saúde",
+      "description": "Mensalidade do plano de saúde",
+      "type": "Despesa",
+      "amount": "480.00",
+      "date": "2025-08-02",
+      "paid": true,
+      "categoryId": 6
+    },
+    {
+      "id": 6,
+      "name": "Curso de Inglês",
+      "description": "Mensalidade do curso de idiomas",
+      "type": "Despesa",
+      "amount": "300.00",
+      "date": "2025-08-06",
+      "paid": false,
+      "categoryId": 4
+    },
+    {
+      "id": 7,
+      "name": "Dividendos Ações",
+      "description": "Recebimento de dividendos",
+      "type": "Receita",
+      "amount": "120.00",
+      "date": "2025-08-07",
+      "paid": true,
+      "categoryId": 10
+    },
+    {
+      "id": 8,
+      "name": "Cinema",
+      "description": "Sessão de cinema com amigos",
+      "type": "Despesa",
+      "amount": "60.00",
+      "date": "2025-08-08",
+      "paid": true,
+      "categoryId": 1
+    },
+    {
+      "id": 9,
+      "name": "Imposto de Renda",
+      "description": "Pagamento de tributo anual",
+      "type": "Despesa",
+      "amount": "1500.00",
+      "date": "2025-08-03",
+      "paid": false,
+      "categoryId": 9
+    },
+    {
+      "id": 10,
+      "name": "Freelance",
+      "description": "Trabalho de desenvolvimento web",
+      "type": "Receita",
+      "amount": "1800.00",
+      "date": "2025-08-04",
+      "paid": true,
+      "categoryId": 8
+    }
+  ]
+}

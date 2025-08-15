@@ -64,7 +64,7 @@ export const mockInterceptor: HttpInterceptorFn = (
   ]
 
   if (req.url.endsWith('api/categories') && req.method === 'GET') {
-     const categories : Array<Category> = mockCategories;
+    const categories : Array<Category> = mockCategories;
     return of(new HttpResponse({ status: 200, body: categories }));
   }
 
