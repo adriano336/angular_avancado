@@ -1,0 +1,86 @@
+<nav class="mb-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a routerLink="/entries">Lançamentos</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a
+        routerLink="/"
+        [routerLinkActive]="['active']"
+        routerLinkActive="router-link-active"
+        >Formulário de lançamentos</a
+      >
+    </li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md-9">
+    <h1 class="h2 border-left pl-2">{{ pageTitle }}</h1>
+  </div>
+  <div class="col-md-3">
+    <a routerLink="/entries" class="btn btn-light float-end"> << Voltar</a>
+  </div>
+</div>
+
+<form [formGroup]="entryForm" (submit)="submitForm()">
+  <div class="card">
+    <div class="card-header">
+      {{ pageTitle }}
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="name" class="form-label">Nome</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+          />
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('name')?.invalid && entryForm.get('name')?.touched
+            "
+          >
+            @if (entryForm.get("name")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+
+            <div *ngIf="entryForm.get('name')?.getError('minLenght')">
+              Deve ter ao menos 2 caracters
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <label for="description" class="form-label">Descricao</label>
+          <input type="text" class="form-control" id="description" />
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (serverErrorMessages.length > 0) {
+    <div class="alert alert-danger">
+      <strong>Erro no servidor</strong>
+      <ul>
+        <li *ngFor="let err of serverErrorMessages">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+  }
+
+  <button
+    [disabled]="submittingForm || entryForm.invalid"
+    type="submit"
+    class="btn btn-primary btn-lg float-end mt-3"
+  >
+    Salvar
+  </button>
+</form>
