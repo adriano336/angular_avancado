@@ -23,7 +23,7 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  excluirCategoria(category?: Category) {
+  excluirCategory(category?: Category) {
     const mustDelete = confirm('Deseja realmente excluir este item?');
 
     if (!!mustDelete)
