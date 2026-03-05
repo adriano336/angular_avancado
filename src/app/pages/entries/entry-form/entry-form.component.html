@@ -34,8 +34,35 @@
 
     <div class="card-body">
       <div class="row">
-        <div class="col-md-4">
-          <label for="name" class="form-label">Nome</label>
+        <!-- type -->
+        <div class="col-md-2">
+          <label for="type" class="form-label">Tipo</label>
+
+          <select
+            name="type"
+            id="type"
+            formControlName="type"
+            class="form-control"
+          >
+            @for (option of typeOptions; track option) {
+              <option [value]="option.value">{{ option.text }}</option>
+            }
+          </select>
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('type')?.invalid && entryForm.get('type')?.touched
+            "
+          >
+            @if (entryForm.get("type")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+          </div>
+        </div>
+
+        <!-- name -->
+        <div class="col-md-5">
+          <label for="name" class="form-label">Lançamento</label>
           <input
             type="text"
             id="name"
@@ -58,10 +85,131 @@
           </div>
         </div>
 
-        <div class="col-md-8">
-          <label for="description" class="form-label">Descricao</label>
-          <input type="text" class="form-control" id="description" />
+        <!-- amount -->
+        <div class="col-md-3">
+          <label for="amount" class="form-label">Valor</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">R$</div>
+            </div>
+            @if (isBrowser) {
+              <input
+                [imask]="imaskConfig"
+                unmask="typed"
+                type="text"
+                id="amount"
+                formControlName="amount"
+                class="form-control text-end"
+              />
+            } @else {
+              <input
+                type="text"
+                class="form-control text-end"
+                placeholder="0,00"
+              />
+            }
+          </div>
+
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('amount')?.invalid &&
+              entryForm.get('amount')?.touched
+            "
+          >
+            @if (entryForm.get("amount")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+          </div>
         </div>
+
+        <!-- date -->
+        <div class="col-md-2">
+          <label for="date" class="form-label">Data</label>
+          <p-date-picker
+            id="date"
+            formControlName="date"
+            inputStyleClass="form-control"
+            dataType="string"
+            dateFormat="dd/mm/yy"
+          >
+          </p-date-picker>
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('date')?.invalid && entryForm.get('date')?.touched
+            "
+          >
+            @if (entryForm.get("date")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+          </div>
+        </div>
+        <!-- paid -->
+        <div class="col-md-2">
+          <label for="paid" class="form-label">Pago</label>
+          <div class="btn-group" role="group">
+            <button
+              (click)="entryForm.get('paid')?.setValue(true)"
+              type="button"
+              [class.active]="entryForm.get('paid')?.value"
+              class="btn btn-outline-info"
+            >
+              Pago
+            </button>
+            <button
+              (click)="entryForm.get('paid')?.setValue(false)"
+              type="button"
+              [class.active]="!entryForm.get('paid')?.value"
+              class="btn btn-outline-info"
+            >
+              Pendente
+            </button>
+          </div>
+
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('paid')?.invalid && entryForm.get('paid')?.touched
+            "
+          >
+            @if (entryForm.get("paid")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+          </div>
+        </div>
+
+        <!-- categoryId -->
+        <div class="col-md-3">
+          <label for="categoryId" class="form-label">Categoria</label>
+          <select
+            name="categoryId"
+            id="categoryId"
+            formControlName="categoryId"
+            class="form-control"
+          >
+            @for (category of categories; track category) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+          <div
+            class="text-danger"
+            *ngIf="
+              entryForm.get('categoryId')?.invalid &&
+              entryForm.get('categoryId')?.touched
+            "
+          >
+            @if (entryForm.get("categoryId")?.getError("required")) {
+              <div>Dado obrigatório</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- description -->
+      <div class="col-md-7">
+        <label for="description" class="form-label">Descricao</label>
+        <input type="text" class="form-control" id="description" />
       </div>
     </div>
   </div>

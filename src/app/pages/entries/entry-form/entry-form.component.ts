@@ -1,9 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   AfterContentChecked,
   AfterViewChecked,
   Component,
+  inject,
+  Inject,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
@@ -13,15 +16,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
+import { IMaskModule } from 'angular-imask'
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 import { EntryService } from '../shared/entries.service';
 import { Entry } from '../shared/entry.model';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CategoryService } from '../../categories/shared/category.service';
+import { Category } from '../../categories/shared/category.model';
 
 @Component({
   selector: 'app-entry-form',
-  imports: [RouterModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, ReactiveFormsModule, DatePickerModule, IMaskModule],
   templateUrl: './entry-form.component.html',
   styleUrl: './entry-form.component.scss',
 })
@@ -32,19 +38,39 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   pageTitle!: string;
   serverErrorMessages: string[] = [];
   submittingForm = false;
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator: '', // Standard for BRL (e.g., 1.000,00)
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ',',
+    autofix: true, // Helps correct values as the user types
+  };
+  isBrowser: boolean;
+  ptBr = {
+    today: 'Hoje'
+  }
+
+  private categoryService = inject(CategoryService);
+  categories!: Category[];
 
   constructor(
     private fb: FormBuilder,
     private entryService: EntryService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.setCurrentActions();
     this.buildEntryForm();
     this.loadEntry();
+    this.loadCategories();
   }
 
   ngAfterContentChecked(): void {
@@ -59,6 +85,11 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     } else {
       this.updateEntry();
     }
+  }
+
+  get typeOptions(): Array<any> {
+    return Object.entries(Entry.types)
+      .map(([value, text]) => { return { text: text, value: value } })
   }
 
   //Private Methods
@@ -90,10 +121,10 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
       description: [null],
-      type: [null, [Validators.required]],
+      type: ['expanse', [Validators.required]],
       amount: [null, [Validators.required]],
       date: [null, [Validators.required]],
-      paid: [null, [Validators.required]],
+      paid: [true, [Validators.required]],
       categoryId: [null, [Validators.required]],
     });
   }
@@ -149,5 +180,11 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     this.router
       .navigateByUrl('entries', { skipLocationChange: true })
       .then(() => this.router.navigate(['entries', entry.id, 'edit']));
+  }
+
+  private loadCategories() {
+    this.categoryService.getAll().subscribe({
+      next: (cats) => this.categories = cats
+    })
   }
 }
